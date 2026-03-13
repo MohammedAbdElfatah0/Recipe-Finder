@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_finder/core/constant/image_manager.dart';
 import 'package:recipe_finder/core/constant/string_manager.dart';
 import 'package:recipe_finder/core/constant/style_manager.dart';
+import 'package:recipe_finder/core/routes/app_routes.dart';
 import 'package:recipe_finder/feature/auth/presentation/validation/validators.dart';
 
 import '../../../../core/constant/color_manager.dart';
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 24),
 
                 CustomTextFormFiledAuth(
-                  emailController: emailController,
+                  controller: emailController,
                   title: StringManager.auth.email,
                   subTitle: StringManager.auth.emailHint,
                   prefix: Icon(
@@ -79,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 16),
                 CustomTextFormFiledAuth(
-                  emailController: passwordController,
+                  controller: passwordController,
                   title: StringManager.auth.password,
                   subTitle: StringManager.auth.passwordHint,
                   prefix: Icon(
@@ -111,7 +112,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: Text(
                       StringManager.auth.login,
-                      style: StyleManager.s18w700.copyWith(color:ColorManager.whiteColor),
+                      style: StyleManager.s18w700.copyWith(
+                        color: ColorManager.whiteColor,
+                      ),
                     ),
                   ),
                 ),
@@ -148,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(width: 4),
                     GestureDetector(
                       onTap: () {
-                        // Handle sign up action
+                        Navigator.pushNamed(context, Routes.registerRoute);
                       },
                       child: Text(
                         StringManager.auth.signUp,
@@ -159,6 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
+                SizedBox(height: 40),
               ],
             ),
           ),
