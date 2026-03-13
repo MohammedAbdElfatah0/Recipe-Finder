@@ -42,6 +42,20 @@ class AuthRepo {
   }
 
   //sign in
+  Future<Either<String, void>> signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return right(null);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
 
   // sgin in with google
 }

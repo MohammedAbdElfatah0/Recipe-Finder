@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_finder/core/constant/image_manager.dart';
 import 'package:recipe_finder/core/constant/string_manager.dart';
 import 'package:recipe_finder/core/constant/style_manager.dart';
 import 'package:recipe_finder/core/routes/app_routes.dart';
+import 'package:recipe_finder/core/widget/loading_indicator.dart';
+import 'package:recipe_finder/core/widget/message.dart';
+import 'package:recipe_finder/feature/auth/data/repo/auth_repo.dart';
+import 'package:recipe_finder/feature/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:recipe_finder/feature/auth/presentation/validation/validators.dart';
 
 import '../../../../core/constant/color_manager.dart';
@@ -31,144 +36,176 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: Image.asset(ImageManager.logo, height: 40, width: 40),
+    return BlocProvider(
+      create: (context) => LoginCubit(AuthRepo()),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Image.asset(ImageManager.logo, height: 40, width: 40),
+          ),
+          title: Text(StringManager.appName, style: StyleManager.s18w700),
+          centerTitle: true,
         ),
-        title: Text(StringManager.appName, style: StyleManager.s18w700),
-        centerTitle: true,
-      ),
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(24),
-                  child: Image.asset(
-                    ImageManager.loginBackground,
-                    width: double.infinity,
-                    height: 200,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: Image.asset(
+                      ImageManager.loginBackground,
+                      width: double.infinity,
+                      height: 200,
 
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(height: 24),
-                Text(
-                  StringManager.auth.welcomeBack,
-                  style: StyleManager.s32w700,
-                ),
-                SizedBox(height: 8),
-                Text(
-                  StringManager.auth.signInToContinue,
-                  style: StyleManager.s16w400.copyWith(
-                    color: ColorManager.darkGreyColor,
-                  ),
-                ),
-                SizedBox(height: 24),
-
-                CustomTextFormFiledAuth(
-                  controller: emailController,
-                  title: StringManager.auth.email,
-                  subTitle: StringManager.auth.emailHint,
-                  prefix: Icon(
-                    Icons.email_outlined,
-                    color: ColorManager.darkGreyColor,
-                  ),
-                  validator: Validators.email,
-                ),
-                SizedBox(height: 16),
-                CustomTextFormFiledAuth(
-                  controller: passwordController,
-                  title: StringManager.auth.password,
-                  subTitle: StringManager.auth.passwordHint,
-                  prefix: Icon(
-                    Icons.lock_outlined,
-                    color: ColorManager.darkGreyColor,
-                  ),
-                  isPassword: true,
-                  validator: Validators.password,
-                ),
-                SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    StringManager.auth.forgotPassword,
-                    style: StyleManager.s14w600.copyWith(
-                      color: ColorManager.primary,
+                      fit: BoxFit.cover,
                     ),
-                    textAlign: TextAlign.end,
                   ),
-                ),
-                SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorManager.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                  SizedBox(height: 24),
+                  Text(
+                    StringManager.auth.welcomeBack,
+                    style: StyleManager.s32w700,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    StringManager.auth.signInToContinue,
+                    style: StyleManager.s16w400.copyWith(
+                      color: ColorManager.darkGreyColor,
                     ),
+                  ),
+                  SizedBox(height: 24),
+
+                  CustomTextFormFiledAuth(
+                    controller: emailController,
+                    title: StringManager.auth.email,
+                    subTitle: StringManager.auth.emailHint,
+                    prefix: Icon(
+                      Icons.email_outlined,
+                      color: ColorManager.darkGreyColor,
+                    ),
+                    validator: Validators.email,
+                  ),
+                  SizedBox(height: 16),
+                  CustomTextFormFiledAuth(
+                    controller: passwordController,
+                    title: StringManager.auth.password,
+                    subTitle: StringManager.auth.passwordHint,
+                    prefix: Icon(
+                      Icons.lock_outlined,
+                      color: ColorManager.darkGreyColor,
+                    ),
+                    isPassword: true,
+                    validator: Validators.password,
+                  ),
+                  SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerRight,
                     child: Text(
-                      StringManager.auth.login,
-                      style: StyleManager.s18w700.copyWith(
-                        color: ColorManager.whiteColor,
+                      StringManager.auth.forgotPassword,
+                      style: StyleManager.s14w600.copyWith(
+                        color: ColorManager.primary,
                       ),
+                      textAlign: TextAlign.end,
                     ),
                   ),
-                ),
-                SizedBox(height: 12),
-                DiviederContinue(),
-                SizedBox(height: 25),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Button(
-                        onPressed: () {},
-                        title: StringManager.auth.google,
-                      ),
-                    ),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: Button(
-                        onPressed: () {},
-                        title: StringManager.auth.apple,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 32),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      StringManager.auth.dontHaveAnAccount,
-                      style: StyleManager.s14w500.copyWith(
-                        color: ColorManager.darkGreyColor,
-                      ),
-                    ),
-                    SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, Routes.registerRoute);
-                      },
-                      child: Text(
-                        StringManager.auth.signUp,
-                        style: StyleManager.s14w600.copyWith(
-                          color: ColorManager.primary,
+                  SizedBox(height: 16),
+                  BlocConsumer<LoginCubit, LoginState>(
+                    listener: (context, state) {
+                      if (state is LoginSuccess) {
+                        Message.showSuccessMessage(
+                          context,
+                          'Login successful!',
+                        );
+                        // //todo go home screen
+                        // Navigator.pushNamedAndRemoveUntil(
+                        //   context,
+                        //   AppRoutes.homeScreen,
+                        //   (route) => false,
+                        // );
+                      }
+                    },
+                    builder: (context, state) {
+                      return state is LoginLoading
+                          ? LoadingIndicator()
+                          : SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<LoginCubit>().signIn(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  );
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: ColorManager.primary,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                              ),
+                              child: Text(
+                                StringManager.auth.login,
+                                style: StyleManager.s18w700.copyWith(
+                                  color: ColorManager.whiteColor,
+                                ),
+                              ),
+                            ),
+                          );
+                    },
+                  ),
+                  SizedBox(height: 12),
+                  DiviederContinue(),
+                  SizedBox(height: 25),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Button(
+                          onPressed: () {},
+                          title: StringManager.auth.google,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 40),
-              ],
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Button(
+                          onPressed: () {},
+                          title: StringManager.auth.apple,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 32),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        StringManager.auth.dontHaveAnAccount,
+                        style: StyleManager.s14w500.copyWith(
+                          color: ColorManager.darkGreyColor,
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.registerRoute);
+                        },
+                        child: Text(
+                          StringManager.auth.signUp,
+                          style: StyleManager.s14w600.copyWith(
+                            color: ColorManager.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 40),
+                ],
+              ),
             ),
           ),
         ),
