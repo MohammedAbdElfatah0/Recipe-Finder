@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "93618743490",
+    "project_id": "recipe-finder-food",
+    "storage_bucket": "recipe-finder-food.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93618743490:android:2ea709bda7c6f08d77b35b",
+        "android_client_info": {
+          "package_name": "com.example.recipe_finder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABdmdJiDFyYJ-2xG8Cm89EnYQtGuFdsGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
