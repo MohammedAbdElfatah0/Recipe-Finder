@@ -32,16 +32,7 @@ class CustomTextFormFiledAuth extends StatelessWidget {
           controller: controller,
           hintText: subTitle,
           prefix: prefix,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter your email';
-            }
-            // Simple email validation
-            if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-              return 'Please enter a valid email';
-            }
-            return null;
-          },
+          validator: validator,
           isPassword: isPassword,
         ),
       ],
