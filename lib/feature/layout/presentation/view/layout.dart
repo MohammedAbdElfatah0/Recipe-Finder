@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipe_finder/core/constant/color_manager.dart';
+
+import '../../../../core/constant/style_manager.dart';
+import '../cubit/layout_cubit.dart';
+
+class LayoutScreen extends StatelessWidget {
+  const LayoutScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LayoutCubit(),
+      child: BlocBuilder<LayoutCubit, LayoutState>(
+        builder: (context, state) {
+          final layoutCubit = context.read<LayoutCubit>();
+          return Scaffold(
+            body: layoutCubit.screen[layoutCubit.currentIndex],
+            extendBody: true,
+            bottomNavigationBar: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white,
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    offset: Offset(0, -3),
+                  ),
+                ],
+              ),
+              child: BottomNavigationBar(
+                currentIndex: layoutCubit.currentIndex,
+                onTap: (value) {
+                  layoutCubit.changeIndex(value);
+                },
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.book),
+                    label: 'My Coures',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    label: 'Profile',
+                  ),
+                ],
+                selectedItemColor: ColorManager.primary,
+                selectedFontSize: 28,
+                unselectedItemColor: ColorManager.darkGreyColor ,
+                unselectedFontSize: 21,
+                selectedLabelStyle: StyleManager.s16w700,
+                unselectedLabelStyle: StyleManager.s14w400,
+                backgroundColor: ColorManager.whiteColor,
+                type: BottomNavigationBarType.fixed,
+                elevation: 0,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
