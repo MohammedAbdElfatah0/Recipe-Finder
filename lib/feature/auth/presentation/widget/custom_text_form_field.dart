@@ -6,12 +6,15 @@ import '../../../../core/widget/custom_text_form_field.dart';
 class CustomTextFormFiledAuth extends StatelessWidget {
   const CustomTextFormFiledAuth({
     super.key,
-    required this.emailController,
+    required this.controller,
     required this.title,
-    this.isPassword = false, required this.subTitle, this.validator, this.prefix,
+    this.isPassword = false,
+    required this.subTitle,
+    this.validator,
+    this.prefix,
   });
 
-  final TextEditingController emailController;
+  final TextEditingController controller;
 
   final String title;
   final String subTitle;
@@ -26,7 +29,7 @@ class CustomTextFormFiledAuth extends StatelessWidget {
         Text(title, style: StyleManager.s14w600),
         SizedBox(height: 16),
         CustomTextFormField(
-          controller: emailController,
+          controller: controller,
           hintText: subTitle,
           prefix: prefix,
           validator: (value) {

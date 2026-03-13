@@ -49,10 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  ImageManager.loginBackground,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: Image.asset(
+                    ImageManager.loginBackground,
+                    width: double.infinity,
+                    height: 200,
+
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 SizedBox(height: 24),
                 Text(
