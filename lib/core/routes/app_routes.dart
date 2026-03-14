@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_finder/feature/category/presentation/view/category_screen.dart';
 
 import '../../feature/auth/presentation/view/auth_screen.dart';
 import '../../feature/auth/presentation/view/login_screen.dart';
 import '../../feature/auth/presentation/view/register_screen.dart';
+import '../../feature/home/presentation/view/home_screen.dart';
 part 'routes.dart';
 
 class AppRoutes {
@@ -14,8 +16,11 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
-      // case Routes.homeRoute:
-      //   return MaterialPageRoute(builder: (_) => HomeScreen());
+      case Routes.homeRoute:
+        return MaterialPageRoute(builder: (_) => HomeScreen());
+      case Routes.category:
+        String title = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => CategoryScreen(title: title));
       default:
         return MaterialPageRoute(
           builder:
