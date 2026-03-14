@@ -1,6 +1,8 @@
 class StringManager {
   static final auth = AuthStringManager();
   static const String appName = 'Recipe Finder';
+  static const String category = 'Categories';
+  static const String seeAll = 'See All';
 }
 
 class AuthStringManager {
