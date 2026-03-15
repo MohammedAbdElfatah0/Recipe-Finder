@@ -40,21 +40,22 @@ class LayoutScreen extends StatelessWidget {
                 },
                 items: const [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.home_outlined),
                     label: 'Home',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.book),
-                    label: 'My Coures',
+                    icon: Icon(Icons.favorite_border_sharp),
+                    label: 'Favorites',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
+                    icon: Icon(Icons.person_2_outlined),
                     label: 'Profile',
                   ),
                 ],
+                iconSize: 32,
                 selectedItemColor: ColorManager.primary,
                 selectedFontSize: 28,
-                unselectedItemColor: ColorManager.darkGreyColor ,
+                unselectedItemColor: ColorManager.darkGreyColor,
                 unselectedFontSize: 21,
                 selectedLabelStyle: StyleManager.s16w700,
                 unselectedLabelStyle: StyleManager.s14w400,
