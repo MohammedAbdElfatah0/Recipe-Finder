@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_finder/feature/category/presentation/view/category_details_screen.dart';
 import 'package:recipe_finder/feature/category/presentation/view/category_screen.dart';
 
 import '../../feature/auth/presentation/view/auth_screen.dart';
@@ -21,6 +22,8 @@ class AppRoutes {
       case Routes.category:
         String title = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => CategoryScreen(title: title));
+      case Routes.categoryDetails:
+        return MaterialPageRoute(builder: (_) => CategoryDetailsScreen());
       default:
         return MaterialPageRoute(
           builder:
