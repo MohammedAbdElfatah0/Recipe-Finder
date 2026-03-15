@@ -8,7 +8,8 @@ import '../widget/tag.dart';
 
 class CategoryDetailsScreen extends StatefulWidget {
   const CategoryDetailsScreen({super.key});
-
+  //TODO give id form api or favorite
+  // final id;
   @override
   State<CategoryDetailsScreen> createState() => _CategoryDetailsScreenState();
 }
