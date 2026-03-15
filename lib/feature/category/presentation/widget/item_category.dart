@@ -3,36 +3,40 @@ import 'package:flutter/material.dart';
 import '../../../../core/constant/color_manager.dart';
 import '../../../../core/constant/image_manager.dart';
 import '../../../../core/constant/style_manager.dart';
+import '../../../../core/routes/app_routes.dart';
 
 class ItemCategory extends StatelessWidget {
   const ItemCategory({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: ColorManager.whiteColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(16),
-      ),
-      elevation: 8,
-      shadowColor: ColorManager.blackColor.withAlpha(51),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadiusGeometry.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, Routes.categoryDetails),
+      child: Card(
+        color: ColorManager.whiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(16),
+        ),
+        elevation: 8,
+        shadowColor: ColorManager.blackColor.withAlpha(51),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadiusGeometry.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+              child: Image.asset(
+                ImageManager.loginBackground,
+                fit: BoxFit.cover,
+                height: 180,
+              ),
             ),
-            child: Image.asset(
-              ImageManager.loginBackground,
-              fit: BoxFit.cover,
-              height: 180,
-            ),
-          ),
-          SizedBox(height: 12),
-          InfoItemCategory(),
-        ],
+            SizedBox(height: 12),
+            InfoItemCategory(),
+          ],
+        ),
       ),
     );
   }
