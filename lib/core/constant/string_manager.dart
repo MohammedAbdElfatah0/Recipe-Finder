@@ -1,5 +1,6 @@
 class StringManager {
   static final auth = AuthStringManager();
+  static final profile = Profile();
   static const String appName = 'Recipe Finder';
   static const String category = 'Categories';
   static const String seeAll = 'See All';
@@ -29,4 +30,19 @@ class AuthStringManager {
 
   final String orSignUpWith = 'Or sign up with';
   final String orLoginWith = 'Or continue with';
+}
+
+class Profile {
+  final String account = 'Account';
+  final String support = 'Support';
+  final String prefernce = 'Prefernce';
+
+  final String editProfile = 'Edit Profile';
+  final String changePassword = 'Change Password';
+  final String notificationSetting = 'Notifiaction Setting';
+  final String darkMode = 'Dark Mode';
+  final String languages = 'Languages';
+  final String helpCenter = 'Help Center';
+  final String privacyPollicy = 'Privacy Pollicy';
+  final String termsOfSerice = 'Terms of Service';
 }
