@@ -78,6 +78,11 @@ class StyleManager {
     letterSpacing: -0.5,
     height: 28.0 / 20,
   );
+  //size 24
+  static const TextStyle s24w700 = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+  );
 
   //size 32
   static const TextStyle s32w700 = TextStyle(
