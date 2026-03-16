@@ -23,15 +23,19 @@ class InfoItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 20, color: color),
           const SizedBox(width: 8),
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-              color: ColorManager.blackColor.withValues(alpha: 0.87),
+          Flexible(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: ColorManager.blackColor.withValues(alpha: 0.87),
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

@@ -23,8 +23,10 @@ class AppRoutes {
         String title = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => CategoryScreen(title: title));
       case Routes.categoryDetails:
-        // final id = settings.arguments as int;
-        return MaterialPageRoute(builder: (_) => CategoryDetailsScreen());
+        final id = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => CategoryDetailsScreen(mealId: id),
+        );
       default:
         return MaterialPageRoute(
           builder:
