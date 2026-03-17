@@ -6,6 +6,7 @@ import '../../feature/auth/presentation/view/auth_screen.dart';
 import '../../feature/auth/presentation/view/login_screen.dart';
 import '../../feature/auth/presentation/view/register_screen.dart';
 import '../../feature/home/presentation/view/home_screen.dart';
+import '../../feature/layout/presentation/view/layout.dart';
 part 'routes.dart';
 
 class AppRoutes {
@@ -17,6 +18,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
+      case Routes.layoutRoute:
+        return MaterialPageRoute(builder: (_) => const LayoutScreen());
       case Routes.homeRoute:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.category:

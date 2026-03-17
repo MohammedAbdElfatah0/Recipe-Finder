@@ -24,4 +24,12 @@ class FirestoreService {
       return left(e.toString());
     }
   }
+  Future<Either<String, DocumentSnapshot<Map<String, dynamic>>>> getUser(String userId) async {
+    try {
+      final result = await _firestore.collection('users').doc(userId).get();
+      return right(result);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
 }

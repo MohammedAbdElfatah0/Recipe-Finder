@@ -121,12 +121,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           context,
                           'Login successful!',
                         );
-                        // //todo go home screen
-                        // Navigator.pushNamedAndRemoveUntil(
-                        //   context,
-                        //   AppRoutes.homeScreen,
-                        //   (route) => false,
-                        // );
+                        // Navigate to home screen
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          Routes.layoutRoute,
+                          (route) => false,
+                        );
                       }
                     },
                     builder: (context, state) {

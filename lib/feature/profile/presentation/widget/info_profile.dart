@@ -5,8 +5,15 @@ import '../../../../core/constant/image_manager.dart';
 import '../../../../core/constant/style_manager.dart';
 
 class InfoProfile extends StatelessWidget {
-  const InfoProfile({super.key});
-
+  const InfoProfile({
+    super.key,
+    required this.image,
+    required this.name,
+    required this.email,
+  });
+  final String image;
+  final String name;
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,10 +23,7 @@ class InfoProfile extends StatelessWidget {
         Stack(
           alignment: AlignmentGeometry.center,
           children: [
-            CircleAvatar(
-              maxRadius: 80,
-              backgroundImage: AssetImage(ImageManager.loginBackground),
-            ),
+            CircleAvatar(maxRadius: 80, backgroundImage: AssetImage(image)),
             Padding(
               padding: EdgeInsetsGeometry.fromLTRB(
                 160 / 2 + 25,
@@ -44,12 +48,12 @@ class InfoProfile extends StatelessWidget {
         ),
         //name text
         Text(
-          'Mohammed Mohammed abd Elfatah',
+          name,
           style: StyleManager.s24w700,
           // softWrap: true,
           overflow: TextOverflow.ellipsis,
         ),
-        Text('Mohammed@gmail.com', style: StyleManager.s24w700),
+        Text(email, style: StyleManager.s24w700),
 
         //email text
       ],
