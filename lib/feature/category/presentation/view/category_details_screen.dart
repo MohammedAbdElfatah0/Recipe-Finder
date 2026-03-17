@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_finder/core/constant/image_manager.dart';
 import 'package:recipe_finder/core/network/dio_service.dart';
 import 'package:recipe_finder/feature/category/data/repo/category_repo.dart';
+import 'package:recipe_finder/feature/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:recipe_finder/feature/favorite/data/model/favorite_model.dart';
 
 import '../cubit/meals_details/meals_details_cubit.dart';
 import '../widget/info_item.dart';
@@ -18,10 +20,16 @@ class CategoryDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create:
-          (context) =>
-              MealsDetailsCubit(CategoryRepo(DioService()))..getMeals(mealId),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:
+              (context) =>
+                  MealsDetailsCubit(CategoryRepo(DioService()))
+                    ..getMeals(mealId),
+        ),
+        BlocProvider(create: (context) => FavoriteCubit()..loadedFavorite()),
+      ],
       child: const _CategoryDetailsView(),
     );
   }
@@ -157,21 +165,50 @@ class _CategoryDetailsViewState extends State<_CategoryDetailsView> {
                         ),
                       ),
                       actions: [
-                        // TODO: wire to a Favourites cubit / local DB
-                        GestureDetector(
-                          onTap: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 16, top: 8),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white.withValues(
-                                alpha: 0.9,
+                        BlocBuilder<FavoriteCubit, FavoriteState>(
+                          builder: (context, favoriteState) {
+                            bool isFavorited = false;
+
+                            if (favoriteState is FavoriteSuccess) {
+                              isFavorited = context
+                                  .read<FavoriteCubit>()
+                                  .isFavorite(meal.idMeal);
+                            }
+
+                            return GestureDetector(
+                              onTap: () {
+                                final favoriteModel = FavoriteModel(
+                                  id: meal.idMeal,
+                                  title: meal.strMeal,
+                                  image: meal.thumbnail,
+                                  isFavorite: true,
+                                );
+                                context.read<FavoriteCubit>().toggleFavorite(
+                                  favoriteModel,
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 16,
+                                  top: 8,
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white.withValues(
+                                    alpha: 0.9,
+                                  ),
+                                  child: Icon(
+                                    isFavorited
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color:
+                                        isFavorited
+                                            ? Colors.red
+                                            : _primaryColor,
+                                  ),
+                                ),
                               ),
-                              child: const Icon(
-                                Icons.favorite_border,
-                                color: _primaryColor,
-                              ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
                       ],
                       flexibleSpace: FlexibleSpaceBar(
@@ -370,29 +407,58 @@ class _CategoryDetailsViewState extends State<_CategoryDetailsView> {
                   bottom: bottomPadding + 20,
                   left: 24,
                   right: 24,
-                  child: SizedBox(
-                    height: 55,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _primaryColor,
-                        foregroundColor: Colors.white,
-                        elevation: 5,
-                        shadowColor: _primaryColor.withValues(alpha: 0.5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
+                  child: BlocBuilder<FavoriteCubit, FavoriteState>(
+                    builder: (context, favoriteState) {
+                      bool isFavorited = false;
+
+                      if (favoriteState is FavoriteSuccess) {
+                        isFavorited = context.read<FavoriteCubit>().isFavorite(
+                          meal.idMeal,
+                        );
+                      }
+
+                      return SizedBox(
+                        height: 55,
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                isFavorited ? Colors.grey : _primaryColor,
+                            foregroundColor: Colors.white,
+                            elevation: 5,
+                            shadowColor: _primaryColor.withValues(alpha: 0.5),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                          onPressed: () {
+                            final favoriteModel = FavoriteModel(
+                              id: meal.idMeal,
+                              title: meal.strMeal,
+                              image: meal.thumbnail,
+                              isFavorite: true,
+                            );
+                            context.read<FavoriteCubit>().toggleFavorite(
+                              favoriteModel,
+                            );
+                          },
+                          icon: Icon(
+                            isFavorited
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            size: 22,
+                          ),
+                          label: Text(
+                            isFavorited
+                                ? 'Remove from Favorites'
+                                : 'Add to Favorites',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                      // TODO: wire to a Favourites cubit / local DB
-                      onPressed: () {},
-                      icon: const Icon(Icons.favorite_border, size: 22),
-                      label: const Text(
-                        'Add to Favorites',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ),
               ],
