@@ -66,7 +66,10 @@ class FavortireScreen extends StatelessWidget {
                                 Routes.categoryDetails,
                                 arguments: favorite.id,
                               ),
-                          child: InfoFavoriteItem(favoriteModel: favorite),
+                          child: InfoFavoriteItem(
+                            key: ValueKey(favorite.id),
+                            favoriteModel: favorite,
+                          ),
                         );
                       },
                     );
